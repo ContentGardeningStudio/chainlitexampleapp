@@ -1,14 +1,14 @@
-# Chainlit LangChain with RAG example - Chat with documents
+# Chainlit LangChain with RAG demo - Chat with documents
 
 ## Installation
 
 ### Python requirements
 
-In your Python 3.13 virtual env, install all deps by running:
+In your Python virtual env (3.12 and 3.13 tested), install all deps by running:
 
 ```
-pip install --upgrade pip
-pip install -r requirements.txt
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
 
 ## Usage
