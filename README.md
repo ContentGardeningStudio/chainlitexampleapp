@@ -21,10 +21,5 @@ chainlit run app.py --port 8000
 
 ## To do list
 
-1. Optionally use Ollama
-  - Ollama model for the chat
-  - Ollama embedding model
-
-2. Upgrade to Chainlit 2.5.5
-   See https://docs.chainlit.io/guides/migration/2.0.0
-
+1. Optionally use an Ollama model for the chat
+2. Optionally use an Ollama embedding model
