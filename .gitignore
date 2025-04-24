@@ -161,5 +161,4 @@ cython_debug/
 .DS_Store
 
 # Chainlit
-.chainlit/
 .files/
