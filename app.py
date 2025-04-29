@@ -36,7 +36,6 @@ def auth_callback(username: str, password: str):
 async def on_chat_start():
     files = None
 
-    # Wait for the user to upload a file
     while files == None:
         files = await cl.AskFileMessage(
             content="Please upload text / PDF files to begin!",
@@ -46,14 +45,10 @@ async def on_chat_start():
             max_files=3,
         ).send()
 
-    # Get all chunks of text from all files
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
 
     texts = []
     for file in files:
-        # print(type(file))
-        # print(file.type)
-
         msg = cl.Message(content=f"Processing `{file.name}`...")
         await msg.send()
 
@@ -61,20 +56,14 @@ async def on_chat_start():
             with open(file.path, "r", encoding="utf-8") as f:
                 text: str = f.read()
         elif file.type == "application/pdf":
-            # get text from pdf
             text = get_txt_from_pdf(file.path)
-            # print(text)
 
-        # Split the new text into chunks + add to the existing list of chunks/texts
         texts = texts + text_splitter.split_text(text)
 
-    # Create a metadata for each chunk
     metadatas = [{"source": f"{i}-pl"} for i in range(len(texts))]
 
     # Create a Chroma vector store
     embeddings = OpenAIEmbeddings()
-    # print(embeddings)
-
     docsearch = await cl.make_async(Chroma.from_texts)(
         texts, embeddings, metadatas=metadatas
     )
