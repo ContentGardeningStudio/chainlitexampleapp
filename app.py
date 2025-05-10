@@ -52,6 +52,7 @@ async def on_chat_start():
         msg = cl.Message(content=f"Processing `{file.name}`...")
         await msg.send()
 
+        text = ""
         if file.type == "text/plain":
             with open(file.path, "r", encoding="utf-8") as f:
                 text: str = f.read()
@@ -60,12 +61,12 @@ async def on_chat_start():
 
         texts = texts + text_splitter.split_text(text)
 
-    metadatas = [{"source": f"{i}-pl"} for i in range(len(texts))]
+    metadata = [{"source": f"{i}-pl"} for i in range(len(texts))]
 
     # Create a Chroma vector store
     embeddings = OpenAIEmbeddings()
     docsearch = await cl.make_async(Chroma.from_texts)(
-        texts, embeddings, metadatas=metadatas
+        texts, embeddings, metadatas=metadata
     )
 
     message_history = ChatMessageHistory()
