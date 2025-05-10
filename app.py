@@ -1,10 +1,8 @@
 import os
-from typing import List
 
 import chainlit as cl
 from dotenv import load_dotenv
 from langchain.chains import ConversationalRetrievalChain
-from langchain.docstore.document import Document
 from langchain.memory import ConversationBufferMemory
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.chat_message_histories import ChatMessageHistory
@@ -12,9 +10,6 @@ from langchain_community.chat_models import ChatOpenAI
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
-
-from typing import Optional
-import chainlit as cl
 
 load_dotenv()
 api_key = os.environ["OPENAI_API_KEY"]
@@ -36,7 +31,7 @@ def auth_callback(username: str, password: str):
 async def on_chat_start():
     files = None
 
-    while files == None:
+    while files is None:
         files = await cl.AskFileMessage(
             content="Please upload text / PDF files to begin!",
             accept=["text/plain", "application/pdf"],
